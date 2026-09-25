@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Tết Trung Thu - Đêm Trăng Đoàn Viên</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Pacifico&family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        vietnamese: ['"Be Vietnam Pro"', 'sans-serif'],
+                        festive: ['"Pacifico"', 'cursive'],
+                        modern: ['"Montserrat"', 'sans-serif']
+                    },
+                    colors: {
+                        deepNight: '#0d1533',
+                        midnightBlue: '#15224a',
+                        skyPurple: '#242b5c',
+                        warmGold: '#fbbf24',
+                        lanternRed: '#dc2626'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            overflow-x: hidden;
+            background-color: #0d1533;
+            color: #f8fafc;
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .swaying-lantern {
+            animation: sway 4s ease-in-out infinite;
+            transform-origin: top center;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+
+        .floating-card {
+            animation: floatSlow 6s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.7)); }
+            50% { filter: drop-shadow(0 0 60px rgba(253, 224, 71, 0.95)); }
+        }
+
+        .moon-glow {
+            animation: pulseGlow 5s ease-in-out infinite;
+        }
+
+        /* Painterly watercolor glassmorphism panel */
+        .glass-panel {
+            background: rgba(21, 34, 74, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(251, 191, 36, 0.25);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d1533;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fbbf24;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col relative select-none">
+
+    <canvas id="skyCanvas" class="fixed inset-0 pointer-events-auto z-0"></canvas>
+
+    <div id="welcomeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0d1533]/90 backdrop-blur-md transition-opacity duration-700">
+        <div class="glass-panel rounded-3xl p-8 max-w-md w-full text-center relative overflow-hidden border border-amber-400/30">
+            <!-- Decorative glow circles -->
+            <div class="absolute -top-12 -left-12 w-28 h-28 bg-amber-500/20 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-12 -right-12 w-28 h-28 bg-red-500/20 rounded-full blur-2xl"></div>
+
+            <div class="mb-6 relative">
+                <div class="w-20 h-20 mx-auto bg-gradient-to-tr from-amber-500 to-red-600 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/30 mb-4 swaying-lantern">
+                    <i class="fa-solid fa-star text-4xl text-yellow-100"></i>
+                </div>
+                <h1 class="font-festive text-3xl md:text-4xl text-amber-300 mb-2">Vui Hội Trăng Rằm</h1>
+                <p class="text-slate-300 text-sm md:text-base">Hòa mình vào không gian cổ tích Tết Trung Thu & Tết Thiếu Nhi ấm áp!</p>
+            </div>
+
+            <form id="nameForm" onsubmit="handleEnter(event)" class="space-y-4 relative z-10">
+                <div>
+                    <label for="userNameInput" class="block text-left text-xs font-semibold text-amber-300 uppercase tracking-wider mb-2">Nhập tên của bạn hoặc người nhận:</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-amber-400">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </span>
+                        <input type="text" id="userNameInput" required placeholder="Ví dụ: Bảo Ngọc, Gia Hân..." 
+                            class="w-full pl-11 pr-4 py-3 bg-[#15224a]/90 border border-amber-400/40 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-amber-300 focus:ring-2 focus:ring-amber-300/30 transition-all font-medium text-base">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 px-6 bg-gradient-to-r from-amber-500 via-red-600 to-amber-600 hover:from-amber-400 hover:to-red-500 text-white font-bold rounded-xl shadow-lg shadow-red-600/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center space-x-2 cursor-pointer">
+                    <span>Vào Đêm Trăng Rằm</span>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </button>
+            </form>
+
+            <p class="mt-6 text-xs text-slate-400">Bấm để bật âm thanh lễ hội & trải nghiệm thế giới cổ tích 🌙</p>
+        </div>
+    </div>
+
+    <div id="mainContent" class="relative z-10 flex flex-col min-h-screen opacity-0 pointer-events-none transition-opacity duration-1000">
+        
+        <!-- Top Navigation -->
+        <header class="w-full py-4 px-6 md:px-12 flex justify-between items-center glass-panel border-b border-amber-500/20">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-300 shadow-inner">
+                    <i class="fa-solid fa-moon text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-xs text-amber-300 font-semibold uppercase tracking-wider block">Tết Trung Thu</span>
+                    <span class="font-festive text-xl text-amber-400">Đêm Đoàn Viên</span>
+                </div>
+            </div>
+
+            <!-- Control Buttons -->
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleAudio()" id="audioBtn" title="Bật/Tắt âm thanh" class="p-2.5 rounded-full bg-[#15224a] border border-amber-400/40 text-amber-300 hover:bg-amber-500/20 transition-all flex items-center justify-center shadow-md">
+                    <i id="audioIcon" class="fa-solid fa-volume-xmark text-lg"></i>
+                </button>
+                <button onclick="triggerFireworksBurst()" title="Bắn pháo hoa" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-red-600 hover:from-amber-400 hover:to-red-500 text-white text-xs md:text-sm font-semibold rounded-full shadow-lg shadow-amber-500/20 transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <span class="hidden sm:inline">Pháo Hoa & Đèn</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body Grid -->
+        <main class="flex-1 container mx-auto px-4 py-8 flex flex-col lg:flex-row items-center justify-center gap-8 my-auto">
+            
+            <!-- Left Side: Interactive Moon with Cuội & Hanging Lanterns -->
+            <div class="w-full lg:w-1/2 flex flex-col items-center justify-center relative">
+                <!-- Glowing Moon Inspired by Reference Image (Cuội Waving) -->
+                <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-tr from-amber-200 via-yellow-200 to-amber-100 moon-glow shadow-2xl flex flex-col items-center justify-center mb-6 border-4 border-amber-100/40 overflow-hidden">
+                    <!-- Surface crater details -->
+                    <div class="absolute w-14 h-14 bg-amber-300/30 rounded-full top-12 left-16 blur-sm"></div>
+                    <div class="absolute w-20 h-20 bg-amber-300/25 rounded-full bottom-14 right-14 blur-sm"></div>
+                    
+                    <!-- Cuội waving silhouette inside moon -->
+                    <div class="z-10 text-center flex flex-col items-center mt-4">
+                        <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center shadow-lg mb-1 animate-bounce">
+                            <i class="fa-solid fa-hand text-amber-200 text-lg"></i>
+                        </div>
+                        <span class="font-festive text-amber-900 text-lg md:text-xl font-bold bg-amber-100/80 px-3 py-0.5 rounded-full shadow">Chú Cuội & Hằng Nga</span>
+                    </div>
+                </div>
+
+                <!-- Hanging traditional lanterns banner -->
+                <div class="flex justify-center space-x-8 md:space-x-12 -mt-12 z-20">
+                    <div class="swaying-lantern flex flex-col items-center">
+                        <div class="w-1 h-8 bg-amber-400/60"></div>
+                        <div class="w-12 h-14 bg-gradient-to-b from-red-600 to-red-700 rounded-xl border border-amber-300/60 shadow-lg flex items-center justify-center text-amber-200 relative">
+                            <i class="fa-solid fa-star text-lg"></i>
+                            <div class="absolute -bottom-3 w-4 h-3 bg-amber-500 rounded-b-md"></div>
+                        </div>
+                    </div>
+                    <div class="swaying-lantern flex flex-col items-center" style="animation-delay: 1s;">
+                        <div class="w-1 h-12 bg-amber-400/60"></div>
+                        <div class="w-16 h-20 bg-gradient-to-b from-amber-500 to-amber-700 rounded-2xl border border-amber-200/60 shadow-lg flex items-center justify-center text-red-100 relative">
+                            <i class="fa-solid fa-star text-2xl"></i>
+                            <div class="absolute -bottom-3 w-6 h-4 bg-red-600 rounded-b-md"></div>
+                        </div>
+                    </div>
+                    <div class="swaying-lantern flex flex-col items-center" style="animation-delay: 0.5s;">
+                        <div class="w-1 h-8 bg-amber-400/60"></div>
+                        <div class="w-12 h-14 bg-gradient-to-b from-red-600 to-red-700 rounded-xl border border-amber-300/60 shadow-lg flex items-center justify-center text-amber-200 relative">
+                            <i class="fa-solid fa-star text-lg"></i>
+                            <div class="absolute -bottom-3 w-4 h-3 bg-amber-500 rounded-b-md"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-xs text-amber-300/90 mt-4 text-center font-medium">💡 Chạm hoặc click bất kỳ đâu trên màn hình để thả thêm đèn lồng giấy & pháo hoa!</p>
+            </div>
+
+            <!-- Right Side: Personalized Greeting Card -->
+            <div class="w-full lg:w-1/2 max-w-xl">
+                <div class="glass-panel rounded-3xl p-6 md:p-8 shadow-2xl floating-card border border-amber-400/30 relative overflow-hidden">
+                    <!-- Background card glow -->
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <!-- Greeting Header -->
+                    <div class="text-center mb-6">
+                        <span class="inline-block px-4 py-1.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold uppercase tracking-widest border border-amber-400/30 mb-3">
+                            <i class="fa-solid fa-gift mr-1.5"></i> Lời Chúc Trung Thu
+                        </span>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white">
+                            Chúc Mừng Trung Thu, <span id="displayName" class="font-festive text-amber-300 text-3xl md:text-4xl block mt-1">Bạn Tôi</span>!
+                        </h2>
+                    </div>
+
+                    <!-- Message Carousel Box -->
+                    <div class="bg-[#15224a]/80 rounded-2xl p-5 md:p-6 border border-amber-400/20 mb-6 relative min-h-[140px] flex items-center justify-center shadow-inner">
+                        <div class="absolute top-3 left-4 text-amber-400/40 text-2xl font-serif">“</div>
+                        <p id="greetingMessageText" class="text-slate-200 text-center text-sm md:text-base leading-relaxed italic px-4">
+                            Đang tải lời chúc ý nghĩa dành riêng cho bạn...
+                        </p>
+                        <div class="absolute bottom-1 right-4 text-amber-400/40 text-2xl font-serif">”</div>
+                    </div>
+
+                    <!-- Actions & Wish Switcher -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <button onclick="nextGreeting()" class="w-full sm:w-auto px-5 py-2.5 bg-[#1b2a5c] hover:bg-[#243570] text-amber-300 border border-amber-400/30 rounded-xl font-medium text-sm transition-all flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-rotate"></i>
+                            <span>Đổi Lời Chúc Khác</span>
+                        </button>
+
+                        <button onclick="shareGreeting()" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-amber-500 to-red-600 hover:from-amber-400 hover:to-red-500 text-white font-semibold rounded-xl shadow-md text-sm transition-all flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-share-nodes"></i>
+                            <span>Chia Sẻ Niềm Vui</span>
+                        </button>
+                    </div>
+
+                    <!-- Footer Note on Card -->
+                    <div class="mt-6 pt-4 border-t border-slate-700/60 text-center text-xs text-slate-300 flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-child-reaching text-amber-400"></i>
+                        <span>Chúc bạn luôn giữ mãi nụ cười rạng rỡ như ánh trăng rằm và tuổi thơ thiếu nhi!</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="py-4 text-center text-xs text-slate-400 glass-panel border-t border-amber-500/10">
+            <p>🌙 Tết Trung Thu & Tết Thiếu Nhi - Đêm Trăng Đoàn Viên Ấm Áp 🏮</p>
+        </footer>
+
+    </div>
+
+    <script>
+        let currentUserName = "Bạn Tôi";
+
+        const greetingMessages = [
+            "Chúc {name} một mùa Trung Thu thật an lành, ấm áp bên gia đình và người thương. Mong rằng nụ cười của bạn sẽ rạng rỡ như ánh trăng rằm tháng Tám!",
+            "Trung Thu đến rồi! Chúc {name} luôn giữ vững trái tim trong trẻo, hồn nhiên như ngày hội trăng rằm tuổi thơ. Chúc mọi ước nguyện của bạn đều bay cao bay xa như chiếc đèn ông sao!",
+            "Nhân dịp Tết Trung Thu và Tết Thiếu Nhi, chúc {name} tràn ngập niềm vui, lúc nào cũng trẻ trung, yêu đời, công việc và học tập hanh thông, gia đình sum vầy hạnh phúc.",
+            "Ánh trăng vàng soi rọi khắp không gian, chúc {name} và gia đình có những phút giây đoàn tụ ngọt ngào bên những chiếc bánh dẻo bánh nướng thơm lừng và chén trà đậm đà.",
+            "Chúc {name} nhận được thật nhiều món quà bất ngờ trong đêm trăng rằm. Mong rằng cuộc sống của bạn luôn ngọt ngào và tràn đầy phép màu như câu chuyện cổ tích Chú Cuội Chị Hằng!"
+        ];
+        let currentMsgIndex = 0;
+
+        function handleEnter(e) {
+            e.preventDefault();
+            const inputVal = document.getElementById('userNameInput').value.trim();
+            if (inputVal) {
+                currentUserName = inputVal;
+            }
+
+            document.getElementById('displayName').innerText = currentUserName;
+            updateGreetingText();
+
+            const modal = document.getElementById('welcomeModal');
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 700);
+
+            const mainContent = document.getElementById('mainContent');
+            mainContent.style.opacity = '1';
+            mainContent.classList.remove('pointer-events-none');
+
+            initAudio();
+        }
+
+        function updateGreetingText() {
+            const template = greetingMessages[currentMsgIndex];
+            const formatted = template.replace(/\{name\}/g, currentUserName);
+            document.getElementById('greetingMessageText').innerText = formatted;
+        }
+
+        function nextGreeting() {
+            currentMsgIndex = (currentMsgIndex + 1) % greetingMessages.length;
+            updateGreetingText();
+            playChimeSound();
+        }
+
+        function shareGreeting() {
+            if (navigator.clipboard) {
+                const text = `Chúc mừng Tết Trung Thu ${currentUserName}! Hãy ghé thăm không gian trăng rằm tuyệt đẹp này nhé!`;
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    showToast("Đã sao chép liên kết vào bộ nhớ tạm! Hãy gửi cho bạn bè nhé 🌙");
+                }).catch(() => {
+                    showToast("Cảm ơn bạn đã lan tỏa niềm vui Trung Thu!");
+                });
+            } else {
+                showToast("Chúc mừng Trung Thu ${currentUserName}!");
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 glass-panel bg-[#15224a]/95 text-amber-300 px-6 py-3 rounded-2xl shadow-2xl border border-amber-400/40 text-sm font-medium transition-all duration-300 opacity-0 translate-y-4';
+            toast.innerText = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.translate = '0 0';
+            }, 50);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.translate = '0 1rem';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        /* --- WEB AUDIO SYNTHESIZER --- */
+        let audioCtx = null;
+        let isAudioPlaying = false;
+        let audioInterval = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            isAudioPlaying = true;
+            document.getElementById('audioIcon').className = "fa-solid fa-volume-high text-lg";
+            
+            if (!audioInterval) {
+                audioInterval = setInterval(() => {
+                    if (isAudioPlaying) {
+                        playRandomHarmonicChime();
+                    }
+                }, 3500);
+            }
+            playRandomHarmonicChime();
+        }
+
+        function toggleAudio() {
+            if (!audioCtx) {
+                initAudio();
+                return;
+            }
+            isAudioPlaying = !isAudioPlaying;
+            const icon = document.getElementById('audioIcon');
+            if (isAudioPlaying) {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                icon.className = "fa-solid fa-volume-high text-lg";
+                showToast("Đã bật âm thanh du dương 🎶");
+            } else {
+                audioCtx.suspend();
+                icon.className = "fa-solid fa-volume-xmark text-lg";
+                showToast("Đã tắt âm thanh 🔇");
+            }
+        }
+
+        function playChimeSound() {
+            if (!isAudioPlaying || !audioCtx) return;
+            try {
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                const notes = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50];
+                osc.frequency.setValueAtTime(notes[Math.floor(Math.random() * notes.length)], now);
+
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + 1.2);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        function playRandomHarmonicChime() {
+            if (!isAudioPlaying || !audioCtx) return;
+            try {
+                const now = audioCtx.currentTime;
+                const notes = [261.63, 329.63, 392.00, 523.25, 659.25];
+                notes.forEach((freq, idx) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, now + idx * 0.15);
+
+                    gain.gain.setValueAtTime(0.02, now + idx * 0.15);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.15 + 0.8);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(now + idx * 0.15);
+                    osc.stop(now + idx * 0.15 + 0.8);
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        /* --- PAINTERLY CANVAS ANIMATION ENGINE --- */
+        const canvas = document.getElementById('skyCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        let stars = [];
+        let floatingLanterns = [];
+        let fireworkParticles = [];
+        let clouds = [];
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * (height * 0.7);
+                this.size = Math.random() * 2.2 + 0.6;
+                this.baseAlpha = Math.random() * 0.7 + 0.3;
+                this.alpha = this.baseAlpha;
+                this.twinkleSpeed = Math.random() * 0.03 + 0.01;
+                this.angle = Math.random() * Math.PI * 2;
+            }
+            update() {
+                this.angle += this.twinkleSpeed;
+                this.alpha = this.baseAlpha + Math.sin(this.angle) * 0.3;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 220, ${Math.max(0.1, this.alpha)})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        class Cloud {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * (height * 0.5) + 50;
+                this.radius = Math.random() * 80 + 50;
+                this.speed = Math.random() * 0.15 + 0.05;
+                this.opacity = Math.random() * 0.15 + 0.05;
+            }
+            update() {
+                this.x += this.speed;
+                if (this.x - this.radius > width) {
+                    this.x = -this.radius;
+                    this.y = Math.random() * (height * 0.5) + 50;
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.fillStyle = `rgba(139, 158, 204, ${this.opacity})`;
+                ctx.filter = 'blur(20px)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.arc(this.x + this.radius * 0.6, this.y - 15, this.radius * 0.7, 0, Math.PI * 2);
+                ctx.arc(this.x - this.radius * 0.6, this.y + 10, this.radius * 0.6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        class FloatingLanternParticle {
+            constructor(x, y) {
+                this.x = x || Math.random() * width;
+                this.y = y || height + 50;
+                this.size = Math.random() * 12 + 10;
+                this.speedY = Math.random() * 0.8 + 0.4;
+                this.speedX = (Math.random() - 0.5) * 0.6;
+                this.wobble = Math.random() * Math.PI;
+                this.wobbleSpeed = Math.random() * 0.03 + 0.01;
+                this.color = Math.random() > 0.4 ? '#fbbf24' : '#dc2626';
+            }
+            update() {
+                this.wobble += this.wobbleSpeed;
+                this.y -= this.speedY;
+                this.x += this.speedX + Math.sin(this.wobble) * 0.5;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 15;
+                
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    ctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * this.size, -Math.sin((18 + i * 72) * Math.PI / 180) * this.size);
+                    ctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * (this.size / 2), -Math.sin((54 + i * 72) * Math.PI / 180) * (this.size / 2));
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        class FireworkParticle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 6 + 2;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.02 + 0.015;
+                this.size = Math.random() * 3 + 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.08;
+                this.alpha -= this.decay;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.alpha);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 10;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Initialize elements
+        for (let i = 0; i < 160; i++) {
+            stars.push(new Star());
+        }
+        for (let i = 0; i < 5; i++) {
+            clouds.push(new Cloud());
+        }
+        for (let i = 0; i < 14; i++) {
+            floatingLanterns.push(new FloatingLanternParticle(Math.random() * width, Math.random() * height));
+        }
+
+        window.addEventListener('click', (e) => {
+            if (e.target.closest('#welcomeModal') || e.target.closest('button')) return;
+            
+            floatingLanterns.push(new FloatingLanternParticle(e.clientX, e.clientY + 40));
+            
+            const colors = ['#fbbf24', '#dc2626', '#fde047', '#f87171', '#60a5fa'];
+            const chosenColor = colors[Math.floor(Math.random() * colors.length)];
+            for (let i = 0; i < 30; i++) {
+                fireworkParticles.push(new FireworkParticle(e.clientX, e.clientY, chosenColor));
+            }
+            playChimeSound();
+        });
+
+        function triggerFireworksBurst() {
+            const centerX = width / 2 + (Math.random() - 0.5) * 200;
+            const centerY = height / 3 + (Math.random() - 0.5) * 100;
+            const colors = ['#fbbf24', '#dc2626', '#fde047', '#f87171', '#34d399', '#60a5fa'];
+            
+            for (let k = 0; k < 3; k++) {
+                setTimeout(() => {
+                    const chosenColor = colors[Math.floor(Math.random() * colors.length)];
+                    for (let i = 0; i < 40; i++) {
+                        fireworkParticles.push(new FireworkParticle(centerX + (Math.random()-0.5)*50, centerY + (Math.random()-0.5)*50, chosenColor));
+                    }
+                    playChimeSound();
+                }, k * 250);
+            }
+            showToast("Bắn pháo hoa rực rỡ đón Trung Thu! 🎆");
+        }
+
+        function animate() {
+            // Painterly gradient night sky inspired by reference image
+            const bgGradient = ctx.createLinearGradient(0, 0, 0, height);
+            bgGradient.addColorStop(0, '#0d1533');
+            bgGradient.addColorStop(0.4, '#15224a');
+            bgGradient.addColorStop(0.8, '#242b5c');
+            bgGradient.addColorStop(1, '#1b2a4a');
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw twinkling stars
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+
+            // Draw soft painterly glowing clouds
+            clouds.forEach(cloud => {
+                cloud.update();
+                cloud.draw();
+            });
+
+            // Update & draw floating star lanterns
+            if (floatingLanterns.length < 25 && Math.random() < 0.03) {
+                floatingLanterns.push(new FloatingLanternParticle());
+            }
+
+            floatingLanterns.forEach((lantern, index) => {
+                lantern.update();
+                lantern.draw();
+                if (lantern.y < -50) {
+                    floatingLanterns.splice(index, 1);
+                }
+            });
+
+            // Update & draw fireworks
+            fireworkParticles.forEach((p, index) => {
+                p.update();
+                p.draw();
+                if (p.alpha <= 0) {
+                    fireworkParticles.splice(index, 1);
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        window.onload = function () {
+            animate();
+            updateGreetingText();
+        }
+    </script>
+</body>
+</html>
